@@ -69,3 +69,6 @@ articleView.renderIndexPage = function() {
   articleView.handleMainNav();
   articleView.setTeasers();
 };
+
+
+articleView.renderIndexPage();

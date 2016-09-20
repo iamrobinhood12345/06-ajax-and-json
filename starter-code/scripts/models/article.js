@@ -35,13 +35,14 @@ Article.loadAll = function(inputData) {
     return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
   })
   .forEach(function(ele) {
-    articles.push(new Article(ele));
+    Article.allArticles.push(new Article(ele));
   });
 };
 
 /* This function below will retrieve the data from either a local or remote
  source, process it, then hand off control to the View: */
 Article.fetchAll = function() {
+  var articleJSON;
   if (localStorage.hackerIpsum) {
     /* When our data is already in localStorage:
     1. We can process and load it,
@@ -52,7 +53,12 @@ Article.fetchAll = function() {
       1.a Load our json data
       1.b Store that data in localStorage so that we can skip the server call next time,
       1.c And then render the index page.*/
+    console.log($.getJSON('starter-code/data/hackerIpsum.json'));
+    localStorage.hackerIpsum = articleJSON;
   }
+
+  Article.loadAll(articleJSON);
+
 };
 
 
@@ -71,3 +77,5 @@ Article.fetchAll = function() {
 
 
 // TODO: invoke the retrieval process for our data!
+
+Article.fetchAll();
