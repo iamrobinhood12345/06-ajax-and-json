@@ -70,5 +70,6 @@ articleView.renderIndexPage = function() {
   articleView.setTeasers();
 };
 
-
-articleView.renderIndexPage();
+if(localStorage.hackerIpsum){
+  articleView.renderIndexPage();
+}

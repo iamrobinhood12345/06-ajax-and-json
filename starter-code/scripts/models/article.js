@@ -42,26 +42,24 @@ Article.loadAll = function(inputData) {
 /* This function below will retrieve the data from either a local or remote
  source, process it, then hand off control to the View: */
 Article.fetchAll = function() {
-  var articleJSON;
   if (localStorage.hackerIpsum) {
     /* When our data is already in localStorage:
     1. We can process and load it,
     2. Then we can render the index page.  */
+    Article.loadAll(JSON.parse(localStorage.hackerIpsum));
   } else {
     /* Without our localStorage in memory, we need to:
     1. Retrieve our JSON file with $.getJSON
       1.a Load our json data
       1.b Store that data in localStorage so that we can skip the server call next time,
       1.c And then render the index page.*/
-    console.log($.getJSON('starter-code/data/hackerIpsum.json'));
-    localStorage.hackerIpsum = articleJSON;
+    $.getJSON('data/hackerIpsum.json', function(data) {
+      localStorage.hackerIpsum = JSON.stringify(data);
+      Article.loadAll(data);
+      articleView.renderIndexPage();
+    });
   }
-
-  Article.loadAll(articleJSON);
-
 };
-
-
 
 /* Great work so far! STRETCH GOAL TIME!? Our main goal in this part of the
    lab will be saving the eTag located in Headers, to see if it's been updated:
@@ -76,6 +74,6 @@ Article.fetchAll = function() {
 */
 
 
-// TODO: invoke the retrieval process for our data!
+// DONE: invoke the retrieval process for our data!
 
 Article.fetchAll();
